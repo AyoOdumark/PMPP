@@ -53,10 +53,10 @@ void vec_add2d(float *A, float *B, float *C, int n)
      //vecAddColKernel<<<1, 32>>>(d_A, d_B, d_C, n);
 
      // Full Threading
-     dim3 blockDim(32, 32);
-     dim3 gridDim(ceil(n/32.0), ceil(n/32.0));
+     dim3 dimBlock(32, 32);
+     dim3 dimGrid(ceil(n/32.0), ceil(n/32.0));
 
-     vecAdd2dKernel<<<gridDim, blockDim>>>(d_A, d_B, d_C, n);
+     vecAdd2dKernel<<<dimGrid, dimBlock>>>(d_A, d_B, d_C, n);
 
      // Copy A from device to host and free device memory
      cudaMemcpy(A, d_A, size, cudaMemcpyDeviceToHost);
